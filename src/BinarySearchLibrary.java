@@ -19,16 +19,14 @@ public class BinarySearchLibrary {
 	 * @param comp how Items are compared for binary search
 	 * @return smallest index k such that comp.compare(list.get(k),target) == 0
 	 */
-	public static <T>
-	    int firstIndexSlow(List<T> list, 
-	    		           T target, Comparator<T> comp) {
+	public static <T> int firstIndexSlow(List<T> list, T target, Comparator<T> comp) {
 		int index = Collections.binarySearch(list, target,comp);
 		
 		if (index < 0) return index;
 		
-		while (0 <= index && comp.compare(list.get(index),target) == 0) {
+		while (0 <= index && comp.compare(list.get(index),target) == 0) 
 			index -= 1;
-		}
+
 		return index+1;
 	}
 	
@@ -41,9 +39,7 @@ public class BinarySearchLibrary {
 	 * @return smallest index k such that comp.compare(list.get(k),target) == 0
 	 * Return -1 if there is no such object in list.               
 	 */
-	public static <T>
-    	int firstIndex(List<T> list, 
-	               	   T target, Comparator<T> comp) {
+	public static <T> int firstIndex(List<T> list, T target, Comparator<T> comp) {
 		
 		int low = -1;
 		int high = list.size()-1;

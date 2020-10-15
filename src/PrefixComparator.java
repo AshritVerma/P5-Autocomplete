@@ -31,10 +31,32 @@ public class PrefixComparator implements Comparator<Term> {
        return new PrefixComparator(prefix);
     }
 
-
+    /**
+     * Overriden method compare which compares Term v and w objects with myPrefixSize implemented
+     * @param v Term object passed with String word and int weight
+     * @param w Term object passed with String word and int weight
+     * @return difference of vchar and wchar rounded to 1 or -1 by Comparator interface or 0 if both v and w words greater than myPrefixSize
+     */
     @Override
     public int compare(Term v, Term w) {
-        // change this to use myPrefixSize as specified
-        return v.getWord().compareTo(w.getWord());
+        int vwordSize = v.getWord().length();
+        int wwordSize = w.getWord().length();
+
+        int x = Math.min(v.getWord().length(), w.getWord().length());
+        x = Math.min(x, myPrefixSize);
+
+
+        for(int i = 0; i < x; i++)
+        {
+            char vchar = v.getWord().charAt(i);
+            char wchar = w.getWord().charAt(i);
+
+            if(vchar - wchar != 0)
+                return vchar - wchar;
+        }
+        if(vwordSize >= myPrefixSize && wwordSize >= myPrefixSize)
+            return 0;
+
+        return vwordSize - wwordSize;
     }
 }
