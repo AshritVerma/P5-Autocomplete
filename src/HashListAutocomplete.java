@@ -37,8 +37,8 @@ public class HashListAutocomplete implements Autocompletor {
      */
     @Override
     public void initialize(String[] terms, double[] weights) {
-        myMap.clear();
-        
+        myMap = new HashMap<>();
+
         myTerms = new Term[terms.length];
 
         for (int i = 0; i < terms.length; i++)
