@@ -24,7 +24,7 @@ public class BinarySearchLibrary {
 		
 		if (index < 0) return index;
 		
-		while (0 <= index && comp.compare(list.get(index),target) == 0) 
+		while (0 <= index && comp.compare(list.get(index),target) == 0)
 			index -= 1;
 
 		return index+1;
@@ -43,14 +43,49 @@ public class BinarySearchLibrary {
 		
 		int low = -1;
 		int high = list.size()-1;
-		
-		// (low,high] contains target
-		// TODO: write method
-		
+		if(list.size() == 0)
+			return -1;
+
+		while(low+1 != high){
+			int mid = (low+high)/2;
+			T midval = list.get(mid);
+			int cmp = comp.compare(midval,target);
+
+			if(cmp<0)
+				low = mid;
+			if(cmp>0)
+				high = mid;
+		}
+		if(high<0 || high >= list.size())
+			return -1;
+
+		if(comp.compare(list.get(high),target) == 0)
+			return high;
+
 		return -1;
 	}
 
-	 /**                                                                                          
+	/*public static <T> int binarySearch(List<T> list, T target,
+									   Comparator<T> comp) {
+		int low = 0;
+		int high = list.size()-1;
+		while (low <= high) {
+			int mid = (low + high)/2;
+			T midval = list.get(mid);
+			int cmp = comp.compare(midval,target);
+
+			if (cmp < 0)
+				low = mid + 1;
+			else if (cmp > 0)
+				high = mid - 1;
+			else
+				return mid; // target found
+		}
+		return -(low + 1);  // target not found
+	}*/
+
+
+	/**
      * Return the index of the last object (largest index)
 	 * o in parameter "equal" to target, that is
      * the last object o such that comp.compare(o,target) == 0.
