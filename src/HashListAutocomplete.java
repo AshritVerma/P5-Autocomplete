@@ -22,6 +22,10 @@ public class HashListAutocomplete implements Autocompletor {
      */
     @Override
     public List<Term> topMatches(String prefix, int k) {
+        if (k < 0) {
+            throw new IllegalArgumentException("Illegal value of k:"+k);
+        }
+
         String key = prefix.substring(0, Math.min(prefix.length(),MAX_PREFIX));
 
         if(myMap.containsKey(key))
