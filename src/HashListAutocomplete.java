@@ -30,11 +30,11 @@ public class HashListAutocomplete implements Autocompletor {
             throw new NullPointerException("Null Pointer Exception");
         }
 
-        String key = prefix.substring(0, Math.min(prefix.length(),MAX_PREFIX));
+        //String key = prefix.substring(0, Math.min(prefix.length(),MAX_PREFIX));
 
-        if(myMap.containsKey(key))
+        if(myMap.containsKey(prefix))
         {
-            List<Term> all = myMap.get(key);
+            List<Term> all = myMap.get(prefix);
             return all.subList(0, Math.min(k, all.size()));
         }
         return new ArrayList<>();
