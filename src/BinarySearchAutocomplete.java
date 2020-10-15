@@ -131,22 +131,18 @@ public class BinarySearchAutocomplete implements Autocompletor {
 	@Override
 	public void initialize(String[] terms, double[] weights) {
 		myTerms = new Term[terms.length];
-		
-		for (int i = 0; i < terms.length; i++) {
+
+		for (int i = 0; i < terms.length; i++)
 			myTerms[i] = new Term(terms[i], weights[i]);
-		}
-		
+
 		Arrays.sort(myTerms);
 	}
 	
 	@Override
 	public int sizeInBytes() {
 		if (mySize == 0) {
-			
-			for(Term t : myTerms) {
-			    mySize += BYTES_PER_DOUBLE + 
-			    		  BYTES_PER_CHAR*t.getWord().length();	
-			}
+			for(Term t : myTerms)
+			    mySize += BYTES_PER_DOUBLE + BYTES_PER_CHAR*t.getWord().length();
 		}
 		return mySize;
 	}
