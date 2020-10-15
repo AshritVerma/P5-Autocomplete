@@ -78,11 +78,8 @@ public class BruteAutocomplete implements Autocompletor {
 	@Override
 	public int sizeInBytes() {
 		if (mySize == 0) {
-			
-			for(Term t : myTerms) {
-			    mySize += BYTES_PER_DOUBLE + 
-			    		BYTES_PER_CHAR*t.getWord().length();	
-			}
+			for(Term t : myTerms)
+			    mySize += BYTES_PER_DOUBLE +BYTES_PER_CHAR*t.getWord().length();
 		}
 		return mySize;
 	}
