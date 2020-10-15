@@ -92,8 +92,8 @@ public class BinarySearchAutocomplete implements Autocompletor {
 	 *            - The (maximum) number of words to be returned
 	 * @return An array of the k words with the largest weights among all words
 	 *         starting with prefix, in descending weight order. If less than k
-	 *         such words exist, return an array containing all those words If
-	 *         no such words exist, reutrn an empty array
+	 *         such words exist, return an array containing all those words. If
+	 *         no such words exist, return an empty array
 	 * @throws NullPointerException if prefix is null
 	 */
 	
@@ -101,17 +101,31 @@ public class BinarySearchAutocomplete implements Autocompletor {
 	public List<Term> topMatches(String prefix, int k) {
 		Term dummy = new Term(prefix,0);
 		PrefixComparator comp = PrefixComparator.getComparator(prefix.length());
-		int first = firstIndexOf(myTerms, dummy, comp);
-		int last = lastIndexOf(myTerms, dummy, comp);
+		int first = BinarySearchLibrary.firstIndex(Arrays.asList(myTerms), dummy, comp);
+		int last = BinarySearchLibrary.lastIndex(Arrays.asList(myTerms), dummy, comp);
 
-		if (first == -1) {               // prefix not found
+		if (first == -1 || k == 0)
 			return new ArrayList<>();
+
+		PriorityQueue<Term> pq = new PriorityQueue<>(Comparator.comparing(Term::getWeight));
+		for (Term t : myTerms) {
+			if (!t.getWord().startsWith(prefix))
+				continue;
+			if (pq.size() < k)
+				pq.add(t);
+			else if (pq.peek().getWeight() < t.getWeight()) {
+				pq.remove();
+				pq.add(t);
+			}
 		}
 
-		// write code here for P5 assignment
+		int numResults = Math.min(k, pq.size());
+		LinkedList<Term> ret = new LinkedList<>();
 
-		return null;
-	
+		for (int i = 0; i < numResults; i++)
+			ret.addFirst(pq.remove());
+
+		return ret;
 	}
 
 	@Override
