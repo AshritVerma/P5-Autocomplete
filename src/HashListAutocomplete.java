@@ -26,6 +26,10 @@ public class HashListAutocomplete implements Autocompletor {
             throw new IllegalArgumentException("Illegal value of k:"+k);
         }
 
+        if(prefix == null){
+            throw new NullPointerException("Null Pointer Exception");
+        }
+
         String key = prefix.substring(0, Math.min(prefix.length(),MAX_PREFIX));
 
         if(myMap.containsKey(key))
