@@ -22,12 +22,14 @@ public class HashListAutocomplete implements Autocompletor {
      */
     @Override
     public List<Term> topMatches(String prefix, int k) {
-        if(myMap.containsKey(prefix.substring(MAX_PREFIX)))
+        String key = prefix.substring(0, Math.min(prefix.length(),MAX_PREFIX));
+
+        if(myMap.containsKey(key))
         {
-            List<Term> all = myMap.get(prefix.substring(MAX_PREFIX));
+            List<Term> all = myMap.get(key);
             return all.subList(0, Math.min(k, all.size()));
         }
-        return null;
+        return new ArrayList<>();
     }
 
     /**
@@ -44,13 +46,16 @@ public class HashListAutocomplete implements Autocompletor {
         for (int i = 0; i < terms.length; i++)
             myTerms[i] = new Term(terms[i], weights[i]);
 
-        //Arrays.sort(myTerms);
-
         for(Term element : myTerms)
         {
-            if(!myMap.containsKey(element.getWord().substring(MAX_PREFIX)))
-                myMap.put(element.getWord().substring(MAX_PREFIX), new ArrayList<Term>());
-            myMap.get(element).add(element);
+            for(int i = 0; i < Math.min(MAX_PREFIX, element.getWord().length()); i++)
+            {
+                String key = element.getWord().substring(0,i);
+                if(!myMap.containsKey(key))
+                    myMap.put(key, new ArrayList<Term>());
+                myMap.get(key).add(element);
+            }
+                //String key = element.getWord().substring(0,Math.min(element.getWord().length(), MAX_PREFIX))
         }
 
         for(String element : myMap.keySet())
