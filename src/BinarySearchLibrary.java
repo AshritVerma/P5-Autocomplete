@@ -40,7 +40,6 @@ public class BinarySearchLibrary {
 	 * Return -1 if there is no such object in list.               
 	 */
 	public static <T> int firstIndex(List<T> list, T target, Comparator<T> comp) {
-		
 		int low = -1;
 		int high = list.size()-1;
 		if(list.size() == 0)
@@ -48,14 +47,14 @@ public class BinarySearchLibrary {
 
 		while(low+1 != high){
 			int mid = (low+high)/2;
-			T midval = list.get(mid);
-			int cmp = comp.compare(midval,target);
+			int cmp = comp.compare(list.get(mid),target);
 
 			if(cmp<0)
 				low = mid;
-			if(cmp>0)
+			if(cmp>=0)
 				high = mid;
 		}
+
 		if(high<0 || high >= list.size())
 			return -1;
 
@@ -64,25 +63,6 @@ public class BinarySearchLibrary {
 
 		return -1;
 	}
-
-	/*public static <T> int binarySearch(List<T> list, T target,
-									   Comparator<T> comp) {
-		int low = 0;
-		int high = list.size()-1;
-		while (low <= high) {
-			int mid = (low + high)/2;
-			T midval = list.get(mid);
-			int cmp = comp.compare(midval,target);
-
-			if (cmp < 0)
-				low = mid + 1;
-			else if (cmp > 0)
-				high = mid - 1;
-			else
-				return mid; // target found
-		}
-		return -(low + 1);  // target not found
-	}*/
 
 
 	/**
@@ -98,16 +78,28 @@ public class BinarySearchLibrary {
      * and there is no index > i such that this is true. Return -1                               
      * if there is no such object in list.                                                       
      */
-	public static <T>
-	int lastIndex(List<T> list, 
-               	  T target, Comparator<T> comp) {
-		
+	public static <T> int lastIndex(List<T> list,  T target, Comparator<T> comp) {
 		int low = 0;
 		int high = list.size();
-		
-		// target in [low,high)
-		// TODO: write  method
-		
+		if(list.size() == 0)
+			return -1;
+
+		while(low != high-1){
+			int mid = (low+high)/2;
+			int cmp = comp.compare(list.get(mid),target);
+
+			if(cmp>0)
+				high = mid;
+			if(cmp<=0)
+				low = mid;
+		}
+
+		if(low<0 || low >= list.size())
+			return -1;
+
+		if(comp.compare(list.get(low),target) == 0)
+			return low;
+
 		return -1;
 	}
 	
