@@ -30,11 +30,11 @@ public class HashListAutocomplete implements Autocompletor {
             throw new NullPointerException("Null Pointer Exception");
         }
 
-        //String key = prefix.substring(0, Math.min(prefix.length(),MAX_PREFIX));
+        String key = prefix.substring(0, Math.min(prefix.length(),MAX_PREFIX));
 
-        if(myMap.containsKey(prefix))
+        if(myMap.containsKey(key))
         {
-            List<Term> all = myMap.get(prefix);
+            List<Term> all = myMap.get(key);
             return all.subList(0, Math.min(k, all.size()));
         }
         return new ArrayList<>();
@@ -48,7 +48,6 @@ public class HashListAutocomplete implements Autocompletor {
     @Override
     public void initialize(String[] terms, double[] weights) {
         myMap = new HashMap<>();
-
         myTerms = new Term[terms.length];
 
         for (int i = 0; i < terms.length; i++)
@@ -56,7 +55,7 @@ public class HashListAutocomplete implements Autocompletor {
 
         for(Term element : myTerms)
         {
-            for(int i = 0; i < Math.min(MAX_PREFIX, element.getWord().length()); i++)
+            for(int i = 0; i <= Math.min(MAX_PREFIX, element.getWord().length()); i++)
             {
                 String key = element.getWord().substring(0,i);
                 if(!myMap.containsKey(key))
