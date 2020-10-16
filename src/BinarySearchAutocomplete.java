@@ -101,8 +101,8 @@ public class BinarySearchAutocomplete implements Autocompletor {
 	public List<Term> topMatches(String prefix, int k) {
 		Term dummy = new Term(prefix,0);
 		PrefixComparator comp = PrefixComparator.getComparator(prefix.length());
-		int first = BinarySearchLibrary.firstIndex(Arrays.asList(myTerms), dummy, comp);
-		int last = BinarySearchLibrary.lastIndex(Arrays.asList(myTerms), dummy, comp);
+		int first = firstIndexOf(myTerms, dummy, comp);
+		int last = lastIndexOf(myTerms, dummy, comp);
 
 		if (first == -1 || k == 0)
 			return new ArrayList<>();
