@@ -62,7 +62,6 @@ public class HashListAutocomplete implements Autocompletor {
                     myMap.put(key, new ArrayList<Term>());
                 myMap.get(key).add(element);
             }
-                //String key = element.getWord().substring(0,Math.min(element.getWord().length(), MAX_PREFIX))
         }
 
         for(String element : myMap.keySet())
@@ -74,7 +73,7 @@ public class HashListAutocomplete implements Autocompletor {
 
     /**
      * Returns bytes taken up by each string which contributes
-     * byter_per_char * length and each double stored, thus
+     * bytes_per_char * length and each double stored, thus
      * accounting for every Term and for all String keys in the map
      * @return size in bytes of memory by accounting for every Term object and
      * calculating length of every key in the map
@@ -83,8 +82,10 @@ public class HashListAutocomplete implements Autocompletor {
     public int sizeInBytes() {
         if(mySize == 0)
         {
+            for(Term element : myTerms)
+                mySize += BYTES_PER_DOUBLE + BYTES_PER_CHAR*element.getWord().length();
             for(String element : myMap.keySet())
-                mySize += BYTES_PER_DOUBLE + BYTES_PER_CHAR*element.length();
+                mySize += BYTES_PER_CHAR*element.length();
         }
         return mySize;
     }
