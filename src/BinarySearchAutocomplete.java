@@ -108,14 +108,12 @@ public class BinarySearchAutocomplete implements Autocompletor {
 			return new ArrayList<>();
 
 		PriorityQueue<Term> pq = new PriorityQueue<>(Comparator.comparing(Term::getWeight));
-		for (Term t : myTerms) {
-			if (!t.getWord().startsWith(prefix))
-				continue;
+		for (int i = first; i <= last; i++) {
 			if (pq.size() < k)
-				pq.add(t);
-			else if (pq.peek().getWeight() < t.getWeight()) {
+				pq.add(myTerms[i]);
+			else if (pq.peek().getWeight() <= myTerms[i].getWeight()) {
 				pq.remove();
-				pq.add(t);
+				pq.add(myTerms[i]);
 			}
 		}
 
